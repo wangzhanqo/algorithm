@@ -124,4 +124,8 @@ public class Array {
         System.out.println(array);
     }
 
+    private void add() {
+
+    }
+
 }
