@@ -124,4 +124,8 @@ public class Array<E> {
         System.out.println((l1 - l) / 1000);
     }
 
+    private void add() {
+
+    }
+
 }
