@@ -71,6 +71,30 @@ public class LoopQueue<E> implements Queue<E> {
         return size;
     }
 
+
+    public void eq(E value) {
+        if ((tail + 1) % data.length == front) {
+            resize(getCapacity() * 2);
+        }
+        data[tail] = value;
+        tail = (tail + 1) % data.length;
+        size++;
+    }
+
+    public E dq() {
+        if (isEmpty()) {
+            throw new RuntimeException();
+        }
+        E ret = data[front];
+        data[front] = null;
+        front = (front + 1) % data.length;
+        size--;
+        if (getCapacity() / 4 == size) {
+            resize(getCapacity() / 2);
+        }
+        return ret;
+    }
+
     public static void main(String[] args) {
         int i = 12;
         int b = 7;
