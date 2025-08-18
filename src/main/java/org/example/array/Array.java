@@ -38,7 +38,7 @@ public class Array<E> {
 
     public void add(int index, E e) {
         if (size == data.length) {
-            return;
+            resize(data.length * 2);
         }
         if (index < 0 || index > size) {
             return;
@@ -56,6 +56,9 @@ public class Array<E> {
             data[i - 1] = data[i];
         }
         size--;
+        if (size == data.length / 4) {
+            resize(data.length / 2);
+        }
         return ret;
     }
 
@@ -97,6 +100,14 @@ public class Array<E> {
         if (index != -1) {
             remove(index);
         }
+    }
+
+    private void resize(int newCapacity) {
+        E[] newData = (E[]) new Object[newCapacity];
+        for (int i = 0; i < size; i++) {
+            newData[i] = data[i];
+        }
+        data = newData;
     }
 
     @Override
