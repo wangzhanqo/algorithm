@@ -1,12 +1,14 @@
 package org.example.array;
 
-public class Array {
-    private int[] data;
+import java.util.Random;
+
+public class Array<E> {
+    private E[] data;
     private int size;
 
 
     public Array(int capacity) {
-        data = new int[capacity];
+        data = (E[]) new Object[capacity];
         size = 0;
     }
 
@@ -26,15 +28,15 @@ public class Array {
         return size == 0;
     }
 
-    public void addLast(int e) {
+    public void addLast(E e) {
         add(size, e);
     }
 
-    public void addFirst(int e) {
+    public void addFirst(E e) {
         add(0, e);
     }
 
-    public void add(int index, int e) {
+    public void add(int index, E e) {
         if (size == data.length) {
             return;
         }
@@ -48,8 +50,8 @@ public class Array {
         size++;
     }
 
-    public int remove(int index) {
-        int ret = data[index];
+    public E remove(int index) {
+        E ret = data[index];
         for (int i = index + 1; i < size; i++) {
             data[i - 1] = data[i];
         }
@@ -57,38 +59,40 @@ public class Array {
         return ret;
     }
 
-    public int removeFirst() {
+    public E removeFirst() {
         return remove(0);
     }
 
-    public int removeLast() {
+    public E removeLast() {
         return remove(size - 1);
     }
 
-    public int get(int index) {
+    public E get(int index) {
         if (index < 0 || index >= size) {
-            return -1;
+            throw new RuntimeException();
         }
         return data[index];
     }
 
-    public boolean contains(int e) {
+    public boolean contains(E e) {
         for (int i = 0; i < size; i++) {
-            if (data[i] == e) {
+            if (data[i].equals(e)) {
                 return true;
             }
         }
         return false;
     }
 
-    public int find(int e) {
-        if (!contains(e)) {
-            return -1;
+    public int find(E e) {
+        for (int i = 0; i < size; i++) {
+            if (data[i].equals(e)) {
+                return i;
+            }
         }
-        return data[e];
+        return -1;
     }
 
-    public void removeElement(int e) {
+    public void removeElement(E e) {
         int index = find(e);
         if (index != -1) {
             remove(index);
@@ -111,17 +115,13 @@ public class Array {
     }
 
     public static void main(String[] args) {
-        Array array = new Array(20);
-        for (int i = 0; i < 10; i++) {
+        Array array = new Array(1000000000);
+        for (int i = 0; i < 10000000; i++) {
             array.addLast(i);
         }
-        System.out.println(array);
-        array.add(2, 300);
-        System.out.println(array);
-        int i = array.get(18);
-        System.out.println(i);
-        array.removeElement(0);
-        System.out.println(array);
+        long l = System.currentTimeMillis();
+        long l1 = System.currentTimeMillis();
+        System.out.println((l1 - l) / 1000);
     }
 
 }
